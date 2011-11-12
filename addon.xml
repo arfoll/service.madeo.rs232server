@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.madeo.ampserver"
+       name="AmpServer"
+       version="0.1"
+       provider-name="Brendan Le Foll">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+  </requires>
+  <extension point="xbmc.service"
+             library="default.py" start="login|startup">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <summary lang="en">Provides integration with ampserver for amplifier control over RS232.</summary>
+  </extension>
+</addon>

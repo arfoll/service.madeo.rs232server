@@ -1,0 +1,13 @@
+INTRO
+
+XBMC service addon that allows ampserver to control from within XBMC in a semi automated matter
+
+REQUIREMENTS
+
+Ampserver is a service addon and requires XBMC 'eden' which is currently only available from git. See http://github.com/xbmc/xbmc.
+Ampserver must be running before XBMC starts with addon.
+
+INSTALL
+
+Place in ~/.xbmc/addons/
+
