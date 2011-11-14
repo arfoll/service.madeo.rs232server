@@ -20,10 +20,13 @@ glib.init_threads()
 import dbus
 import xbmc
 
+AZUR_BUS_NAME = 'uk.co.madeo.ampserver'
+AZUR_BUS_PATH = '/uk/co/madeo/ampserver'
+
 bus = dbus.SystemBus()
-amp = bus.get_object('uk.co.madeo.ampserver',
-                     '/uk/co/madeo/ampserver')
-iface = dbus.Interface(amp, 'uk.co.madeo.ampserver')
+amp = bus.get_object(AZUR_BUS_NAME,
+                     AZUR_BUS_PATH)
+iface = dbus.Interface(amp, AZUR_BUS_NAME)
 music = False
 video = False
 power = False
@@ -54,3 +57,4 @@ while (not xbmc.abortRequested):
     if (music is True):
       iface.volumeup()
       music = False
+  #TODO: switch off after xbmc screensaver goes on

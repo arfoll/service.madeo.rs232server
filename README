@@ -9,5 +9,11 @@ Ampserver must be running before XBMC starts with addon.
 
 INSTALL
 
+Run the ampserver.py in the background (needs to be started before xbmc runs)
 Place in ~/.xbmc/addons/
 
+FUNCTIONALITY
+
+On video/audio start amp will be poweredon.
+On media type change (video -> audio) or (audio -> video) volume will be modified. I like the play videos louder than music.
+On XBMC screensaver start (or blackout) and no media is playing, amplifier will be turned off
