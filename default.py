@@ -20,27 +20,24 @@ glib.init_threads()
 import dbus
 import xbmc
 
-AZUR_BUS_NAME = 'uk.co.madeo.ampserver'
-AZUR_BUS_PATH = '/uk/co/madeo/ampserver'
+AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
+AMPSERVER_BUS_PATH = '/uk/co/madeo/ampserver'
 
 bus = dbus.SystemBus()
-amp = bus.get_object(AZUR_BUS_NAME,
-                     AZUR_BUS_PATH)
-iface = dbus.Interface(amp, AZUR_BUS_NAME)
+amp = bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
+iface = dbus.Interface(amp, AMPSERVER_BUS_NAME)
+
 music = False
 video = False
 power = False
 
-def onPlaybackStarted():
-  iface.poweron()
+#two minutes
+IDLETIME = 120
+#to avoid xbmc start with ampon but never switching off 
+#because power is wrong
+FIRSTRUN = False
 
-def onPlayBackStopped(self):
-  iface.poweroff()
-
-#xbmc.SetVolume(100)
 while (not xbmc.abortRequested):
-
-  #volume change
   if (xbmc.Player().isPlayingAudio()):
     music = True
     if (power is False):
@@ -57,4 +54,9 @@ while (not xbmc.abortRequested):
     if (music is True):
       iface.volumeup()
       music = False
-  #TODO: switch off after xbmc screensaver goes on
+  elif (xbmc.getGlobalIdleTime() > IDLETIME) and (power is True or FIRSTRUN is True):
+      iface.poweroff()
+      power = False
+      FIRSTRUN = False
+  else:
+    xbmc.sleep(1000)
