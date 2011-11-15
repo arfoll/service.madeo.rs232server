@@ -18,6 +18,7 @@ gobject.threads_init()
 from dbus import glib
 glib.init_threads()
 import dbus
+import time
 import xbmc
 
 AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
@@ -36,8 +37,17 @@ IDLETIME = 120
 #to avoid xbmc start with ampon but never switching off 
 #because power is wrong
 FIRSTRUN = False
+#in order to not stop playing as soon as video/playlist ends
+IDLE = 0
+DIDPLAY = False
 
 while (not xbmc.abortRequested):
+  # if xbmc is playing 
+  if (xbmc.Player().isPlaying() == 1):
+    IDLE = 0
+    DIDPLAY = True
+    lastcheck = time.time()
+  # check play type
   if (xbmc.Player().isPlayingAudio()):
     music = True
     if (power is False):
@@ -54,9 +64,14 @@ while (not xbmc.abortRequested):
     if (music is True):
       iface.volumeup()
       music = False
+  #poweroff if hasn't played/idle for 120secs
   elif (xbmc.getGlobalIdleTime() > IDLETIME) and (power is True or FIRSTRUN is True):
+    if (IDLE == 0) and (DIDPLAY is False):
       iface.poweroff()
       power = False
       FIRSTRUN = False
-  else:
-    xbmc.sleep(1000)
+      IDLE = 1
+    elif(DIDPLAY == True) and ((time.time() - lastcheck) > IDLETIME):
+      DIDPLAY = False;
+  # small sleep
+  xbmc.sleep(1000)
