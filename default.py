@@ -22,19 +22,18 @@ import time
 import xbmc
 import xbmcgui
 
+#idle timeout before poweroff called
+IDLETIME = 120
+#change to False to get no notifications in case of disconnections
+NOTIFIY = True
+
+#Dbus paths
 AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
 AMPSERVER_BUS_PATH = '/uk/co/madeo/ampserver'
-
-bus = dbus.SystemBus()
-amp = bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
-iface = dbus.Interface(amp, AMPSERVER_BUS_NAME)
-
+#volume/power control variables
 music = False
 video = False
 power = False
-
-#two minutes
-IDLETIME = 120
 #to avoid xbmc start with ampon but never switching off 
 #because power is wrong
 FIRSTRUN = False
@@ -42,17 +41,19 @@ FIRSTRUN = False
 IDLE = 0
 DIDPLAY = False
 
-class dbusControl:
+class DbusControl:
   def __init__(self):
-    connect()
+    self.connect()
 
   def connect(self):
     try:
       self.bus = dbus.SystemBus()
-      self.amp = bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
-      self.iface = dbus.Interface(amp, AMPSERVER_BUS_NAME)
+      self.amp = self.bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
+      self.iface = dbus.Interface(self.amp, AMPSERVER_BUS_NAME)
     except:
-      #xbmcgui.message('failed to connect to ampserver')
+      if NOTIFY:
+        dialog = xbmcgui.Dialog()
+        dialog.ok("Ampserver", " Could not connect to Ampserver ")
 
   def checkIface(self):
     try:
@@ -68,7 +69,7 @@ class dbusControl:
       self.connect()
       return self.iface
 
-control = dbusControl()
+control = DbusControl()
 
 while (not xbmc.abortRequested):
   # if xbmc is playing 
