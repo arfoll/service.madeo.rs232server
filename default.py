@@ -22,18 +22,19 @@ import time
 import xbmc
 import xbmcgui
 
-#idle timeout before poweroff called
+#idle timeout in seconds before poweroff called
 IDLETIME = 120
-#change to False to get no notifications in case of disconnections
-NOTIFIY = True
+# 0 no notifications
+# 1 notification on xbmc start only
+# 2 is debug mode
+NOTIFY = 1
 
 #Dbus paths
 AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
 AMPSERVER_BUS_PATH = '/uk/co/madeo/ampserver'
-#volume/power control variables
+#volume control variables
 music = False
 video = False
-power = False
 #to avoid xbmc start with ampon but never switching off 
 #because power is wrong
 FIRSTRUN = False
@@ -43,17 +44,12 @@ DIDPLAY = False
 
 class DbusControl:
   def __init__(self):
-    self.connect()
+    pass
 
   def connect(self):
-    try:
-      self.bus = dbus.SystemBus()
-      self.amp = self.bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
-      self.iface = dbus.Interface(self.amp, AMPSERVER_BUS_NAME)
-    except:
-      if NOTIFY:
-        dialog = xbmcgui.Dialog()
-        dialog.ok("Ampserver", " Could not connect to Ampserver ")
+    self.bus = dbus.SystemBus()
+    self.amp = self.bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
+    self.iface = dbus.Interface(self.amp, AMPSERVER_BUS_NAME)
 
   def checkIface(self):
     try:
@@ -69,7 +65,54 @@ class DbusControl:
       self.connect()
       return self.iface
 
-control = DbusControl()
+class Caller:
+  def __init__(self):
+    #for notify mode 1
+    self.NOTIFYDONE = False
+    self.POWER = False
+    self.control = DbusControl()
+
+  def poweron(self):
+    try:
+      self.control.getIface().poweron()
+      self.POWER = True
+    except:
+      self.connectionError()
+
+  def poweroff(self):
+    try:
+      self.control.getIface().poweroff()
+      self.POWER = False
+    except:
+      self.connectionError()
+
+  def volumedown(self):
+    try:
+      self.control.getIface().volumedown()
+    except:
+      self.connectionError()
+
+  def volumeup(self):
+    try:
+      self.control.getIface().volumeup()
+    except:
+      self.connectionError()
+
+  def errorMessage(self, phrase):
+    dialog = xbmcgui.Dialog()
+    dialog.ok("Ampserver", phrase)
+
+  def connectionError(self):
+    if NOTIFY is 1 and self.NOTIFYDONE is False:
+      self.NOTIFYDONE = True
+      self.errorMessage("Could not connect to Ampserver")
+    elif NOTIFY is 2:
+      self.errorMessage("Could not connect to Ampserver")
+
+  def powerStatus(self):
+    return self.POWER
+
+caller = Caller()
 
 while (not xbmc.abortRequested):
   # if xbmc is playing 
@@ -80,25 +123,22 @@ while (not xbmc.abortRequested):
   # check play type
   if (xbmc.Player().isPlayingAudio()):
     music = True
-    if (power is False):
-      control.getIface().poweron()
-      power = True
+    if (caller.powerStatus() is False):
+      caller.poweron()
     if (video is True):
-      control.getIface().volumedown()
+      caller.volumedown()
       video = False
   elif (xbmc.Player().isPlayingVideo()):
     video = True
-    if (power is False):
-      control.getIface().poweron()
-      power = True
+    if (caller.powerStatus() is False):
+      caller.poweron()
     if (music is True):
-      control.getIface().volumeup()
+      caller.volumeup()
       music = False
   #poweroff if hasn't played/idle for 120secs
-  elif (xbmc.getGlobalIdleTime() > IDLETIME) and (power is True or FIRSTRUN is True):
+  elif (xbmc.getGlobalIdleTime() > IDLETIME) and (caller.powerStatus() is True or FIRSTRUN is True):
     if (IDLE == 0) and (DIDPLAY is False):
-      control.getIface().poweroff()
-      power = False
+      caller.poweroff()
       FIRSTRUN = False
       IDLE = 1
     elif(DIDPLAY == True) and ((time.time() - lastcheck) > IDLETIME):
