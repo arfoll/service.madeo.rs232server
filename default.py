@@ -20,6 +20,7 @@ glib.init_threads()
 import dbus
 import time
 import xbmc
+import xbmcgui
 
 AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
 AMPSERVER_BUS_PATH = '/uk/co/madeo/ampserver'
@@ -41,6 +42,34 @@ FIRSTRUN = False
 IDLE = 0
 DIDPLAY = False
 
+class dbusControl:
+  def __init__(self):
+    connect()
+
+  def connect(self):
+    try:
+      self.bus = dbus.SystemBus()
+      self.amp = bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
+      self.iface = dbus.Interface(amp, AMPSERVER_BUS_NAME)
+    except:
+      #xbmcgui.message('failed to connect to ampserver')
+
+  def checkIface(self):
+    try:
+      iface.check()
+      return True
+    except:
+      return False
+
+  def getIface(self):
+    if self.checkIface():
+      return self.iface
+    else:
+      self.connect()
+      return self.iface
+
+control = dbusControl()
+
 while (not xbmc.abortRequested):
   # if xbmc is playing 
   if (xbmc.Player().isPlaying() == 1):
@@ -51,23 +80,23 @@ while (not xbmc.abortRequested):
   if (xbmc.Player().isPlayingAudio()):
     music = True
     if (power is False):
-      iface.poweron()
+      control.getIface().poweron()
       power = True
     if (video is True):
-      iface.volumedown()
+      control.getIface().volumedown()
       video = False
   elif (xbmc.Player().isPlayingVideo()):
     video = True
     if (power is False):
-      iface.poweron()
+      control.getIface().poweron()
       power = True
     if (music is True):
-      iface.volumeup()
+      control.getIface().volumeup()
       music = False
   #poweroff if hasn't played/idle for 120secs
   elif (xbmc.getGlobalIdleTime() > IDLETIME) and (power is True or FIRSTRUN is True):
     if (IDLE == 0) and (DIDPLAY is False):
-      iface.poweroff()
+      control.getIface().poweroff()
       power = False
       FIRSTRUN = False
       IDLE = 1
