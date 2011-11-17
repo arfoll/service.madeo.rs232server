@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+    <string id="30000">Show connection errors</string>
+    <string id="30001">Timeout in seconds before amp poweroff</string>
+    <string id="30002">Connection Debug Mode</string>
+
+    <string id="30051">General</string>
+    <string id="30052">Debug</string>
+
+    <string id="30100">Could not connect to AmpServer</string>
+    <string id="30101">AmpServer</string>
+</strings>

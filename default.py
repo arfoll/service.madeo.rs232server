@@ -21,13 +21,15 @@ import dbus
 import time
 import xbmc
 import xbmcgui
+import xbmcaddon
+import sys
 
-#idle timeout in seconds before poweroff called
-IDLETIME = 120
-# 0 no notifications
-# 1 notification on xbmc start only
-# 2 is debug mode
-NOTIFY = 1
+#ROOTDIR = Addon.getAddonInfo('path')
+#BASE_RESOURCE_PATH = join(ROOTDIR, "resources")
+
+Addon = xbmcaddon.Addon(id='script.madeo.ampserver')
+#__settings__ = Addon(id='script.madeo.ampserver')
+__language__ = Addon.getLocalizedString
 
 #Dbus paths
 AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
@@ -41,6 +43,7 @@ FIRSTRUN = False
 #in order to not stop playing as soon as video/playlist ends
 IDLE = 0
 DIDPLAY = False
+NOTIFYDONE = False
 
 class DbusControl:
   def __init__(self):
@@ -100,14 +103,12 @@ class Caller:
 
   def errorMessage(self, phrase):
     dialog = xbmcgui.Dialog()
-    dialog.ok("Ampserver", phrase)
+    dialog.ok(__language__(30101), phrase)
 
   def connectionError(self):
-    if NOTIFY is 1 and self.NOTIFYDONE is False:
+    if (bool(Addon.getSetting('notify'))) and (self.NOTIFYDONE is False):
       self.NOTIFYDONE = True
-      self.errorMessage("Could not connect to Ampserver")
-    elif NOTIFY is 2:
-      self.errorMessage("Could not connect to Ampserver")
+      self.errorMessage(__language__(30100))
 
   def powerStatus(self):
     return self.POWER
@@ -136,12 +137,12 @@ while (not xbmc.abortRequested):
       caller.volumeup()
       music = False
   #poweroff if hasn't played/idle for 120secs
-  elif (xbmc.getGlobalIdleTime() > IDLETIME) and (caller.powerStatus() is True or FIRSTRUN is True):
+  elif (xbmc.getGlobalIdleTime() > int(Addon.getSetting('timeout'))) and (caller.powerStatus() is True or FIRSTRUN is True):
     if (IDLE == 0) and (DIDPLAY is False):
       caller.poweroff()
       FIRSTRUN = False
       IDLE = 1
-    elif(DIDPLAY == True) and ((time.time() - lastcheck) > IDLETIME):
+    elif(DIDPLAY == True) and ((time.time() - lastcheck) > int(Addon.getSetting('timeout'))):
       DIDPLAY = False;
   # small sleep
   xbmc.sleep(1000)

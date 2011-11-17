@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="30051">
+    <setting id="notify" type="bool" label="30000" default="true" />
+    <setting id="timeout" type="number" label="30001" default="120" />
+  </category>
+  <category label="30052">
+    <setting id="debug"  type="bool" label="30002" default="false" />
+  </category>
+</settings>

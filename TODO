@@ -1,3 +1,4 @@
-- add icon.png
+- better icon.png
 - add xbmc configuration/settings
 - volume control
+- reset notificationdone on connect()
