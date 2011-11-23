@@ -2,7 +2,8 @@
 <strings>
     <string id="30000">Show connection errors</string>
     <string id="30001">Timeout in seconds before amp poweroff</string>
-    <string id="30002">Connection Debug Mode</string>
+    <string id="30002">Volume diff when audio->video and video->audio</string>
+    <string id="30003">Connection Debug Mode</string>
 
     <string id="30051">General</string>
     <string id="30052">Debug</string>

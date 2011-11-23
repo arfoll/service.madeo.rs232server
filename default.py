@@ -91,13 +91,13 @@ class Caller:
 
   def volumedown(self):
     try:
-      self.control.getIface().volumedown()
+      self.control.getIface().volumedown(int(Addon.getSetting('voldiff')))
     except:
       self.connectionError()
 
   def volumeup(self):
     try:
-      self.control.getIface().volumeup()
+      self.control.getIface().volumeup(int(Addon.getSetting('voldiff')))
     except:
       self.connectionError()
 
@@ -113,7 +113,9 @@ class Caller:
   def powerStatus(self):
     return self.POWER
 
+
 caller = Caller()
+#xbmc.executeJSONRPC("{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": 100 }, \"id\": 1}")
 
 while (not xbmc.abortRequested):
   # if xbmc is playing 
@@ -121,6 +123,8 @@ while (not xbmc.abortRequested):
     IDLE = 0
     DIDPLAY = True
     lastcheck = time.time()
+    #Application.Property.Name(volume)
+    #Application.Property.Name(muted)
   # check play type
   if (xbmc.Player().isPlayingAudio()):
     music = True
