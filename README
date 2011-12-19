@@ -12,8 +12,6 @@ INSTALL
 Run the ampserver.py in the background (needs to be started before xbmc runs)
 Place in ~/.xbmc/addons/
 
-I recommend you then place the included keyboard.xml in ~/.xbmc/userdata/. This will map u/d keys on the keyboard to control the amplifier volume and the volume keys on the android remote or other remotes to also do the same. Note no UI notification will be given and the response time is not brilliant
-
 FUNCTIONALITY
 
 On video/audio start amp will be poweredon.

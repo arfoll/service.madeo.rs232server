@@ -24,16 +24,13 @@ import xbmcgui
 import xbmcaddon
 import sys
 
-#ROOTDIR = Addon.getAddonInfo('path')
-#BASE_RESOURCE_PATH = join(ROOTDIR, "resources")
-
-Addon = xbmcaddon.Addon(id='script.madeo.ampserver')
-#__settings__ = Addon(id='script.madeo.ampserver')
+Addon = xbmcaddon.Addon(id='script.madeo.rs232server')
 __language__ = Addon.getLocalizedString
 
 #Dbus paths
-AMPSERVER_BUS_NAME = 'uk.co.madeo.ampserver'
-AMPSERVER_BUS_PATH = '/uk/co/madeo/ampserver'
+RS232SERVER_BUS_NAME = 'uk.co.madeo.rs232server'
+AZURSERVICE_OBJ_PATH = '/uk/co/madeo/rs232server/azur'
+AZURSERVICE_IFACE = 'uk.co.madeo.rs232server.azur'
 #volume control variables
 music = False
 video = False
@@ -51,8 +48,8 @@ class DbusControl:
 
   def connect(self):
     self.bus = dbus.SystemBus()
-    self.amp = self.bus.get_object(AMPSERVER_BUS_NAME, AMPSERVER_BUS_PATH)
-    self.iface = dbus.Interface(self.amp, AMPSERVER_BUS_NAME)
+    self.amp = self.bus.get_object(RS232SERVER_BUS_NAME, AZURSERVICE_OBJ_PATH)
+    self.iface = dbus.Interface(self.amp, AZURSERVICE_IFACE)
 
   def checkIface(self):
     try:

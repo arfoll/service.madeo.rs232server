@@ -6,8 +6,10 @@
     <string id="30003">Connection Debug Mode</string>
 
     <string id="30051">General</string>
-    <string id="30052">Debug</string>
+    <string id="30052">Azur</string>
+    <string id="30053">LGTV</string>
+    <string id="30054">Debug</string>
 
     <string id="30100">Could not connect to AmpServer</string>
-    <string id="30101">AmpServer</string>
+    <string id="30101">RS232Server</string>
 </strings>
