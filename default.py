@@ -1,4 +1,4 @@
-# Copyright (C) 2011 Brendan Le Foll <brendan@fridu.net>
+# Copyright (C) 2011, 2012 Brendan Le Foll <brendan@fridu.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ import xbmcgui
 import xbmcaddon
 import sys
 
-Addon = xbmcaddon.Addon(id='script.madeo.rs232server')
+Addon = xbmcaddon.Addon(id='service.madeo.rs232server')
 __language__ = Addon.getLocalizedString
 
 #Dbus paths
@@ -72,29 +72,20 @@ class Caller:
     self.POWER = False
     self.control = DbusControl()
 
+  def send_cmd(self, msg, repeat):
+    self.control.getIface().send_cmd(msg, repeat, False)
+
   def poweron(self):
     try:
-      self.control.getIface().poweron()
+      self.send_cmd('poweron', 1)
       self.POWER = True
     except:
       self.connectionError()
 
   def poweroff(self):
     try:
-      self.control.getIface().poweroff()
+      self.send_cmd('poweroff', 1)
       self.POWER = False
-    except:
-      self.connectionError()
-
-  def volumedown(self):
-    try:
-      self.control.getIface().volumedown(int(Addon.getSetting('voldiff')))
-    except:
-      self.connectionError()
-
-  def volumeup(self):
-    try:
-      self.control.getIface().volumeup(int(Addon.getSetting('voldiff')))
     except:
       self.connectionError()
 
@@ -128,14 +119,14 @@ while (not xbmc.abortRequested):
     if (caller.powerStatus() is False):
       caller.poweron()
     if (video is True):
-      caller.volumedown()
+      caller.send_cmd('voldown', int(Addon.getSetting('voldiff')))
       video = False
   elif (xbmc.Player().isPlayingVideo()):
     video = True
     if (caller.powerStatus() is False):
       caller.poweron()
     if (music is True):
-      caller.volumeup()
+      caller.send_cmd('volup', int(Addon.getSetting('voldiff')))
       music = False
   #poweroff if hasn't played/idle for 120secs
   elif (xbmc.getGlobalIdleTime() > int(Addon.getSetting('timeout'))) and (caller.powerStatus() is True or FIRSTRUN is True):

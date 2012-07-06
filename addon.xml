@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.madeo.rs232server"
+<addon id="service.madeo.rs232server"
        name="Rs232Server"
        version="0.1"
        provider-name="Brendan Le Foll">
