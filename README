@@ -4,12 +4,12 @@ XBMC service addon that allows ampserver to control from within XBMC in a semi a
 
 REQUIREMENTS
 
-Ampserver is a service addon and requires XBMC 'eden' which is currently only available from git. See http://github.com/xbmc/xbmc.
-Ampserver must be running before XBMC starts with addon.
+rs232server is a service addon and requires XBMC 11.x 'Eden'. Note this is only tested on x86 XBMC 12.x on Linux.
+rs232server must be running before XBMC starts with addon.
 
 INSTALL
 
-Run the ampserver.py in the background (needs to be started before xbmc runs)
+Run the rs232_server.py in the background (needs to be started before xbmc runs)
 Place in ~/.xbmc/addons/
 
 FUNCTIONALITY
