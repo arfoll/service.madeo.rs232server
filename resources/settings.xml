@@ -8,8 +8,8 @@
     <setting id="voldiff" type="number" label="30002" default="5" />
   </category>
   <category label="30053">
-     <setting id="musicon" type="number" label="30003" default="false" />
-     <setting id="muteonvid" type="number" label="30004" default="true" />
+     <setting id="musicon" type="bool" label="30003" default="false" />
+     <setting id="muteonvid" type="bool" label="30004" default="true" />
      <!-- <setting id="timeoutlgtv" type="number" label="30001" default="240" /> -->
   </category>
   <category label="30054">
