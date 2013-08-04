@@ -50,10 +50,16 @@ class Caller:
   def send_lgtv_cmd(self, msg, repeat):
     self.control.getLgtvIface().send_cmd(msg, repeat, False)
 
-  def poweron(self):
+  def poweron(self, audioonly=False):
     try:
       self.send_azur_cmd('poweron', 1)
-      self.POWER = True
+      self.send_lgtv_cmd('poweron', 1)
+      if audioonly:
+        # need to set enerscreenoff when tv is on
+        self.send_lgtv_cmd('enerscreenoff', 1)
+        self.POWER = 2
+      else:
+        self.POWER = True
     except:
       self.connectionError()
 
@@ -89,13 +95,13 @@ while (not xbmc.abortRequested):
   if (xbmc.Player().isPlayingAudio()):
     music = True
     if (caller.powerStatus() is False):
-      caller.poweron()
+      caller.poweron(not bool(Addon.getSetting('musicon')))
     if (video is True):
       caller.send_azur_cmd('voldown', int(Addon.getSetting('voldiff')))
       video = False
   elif (xbmc.Player().isPlayingVideo()):
     video = True
-    if (caller.powerStatus() is False):
+    if (caller.powerStatus() is False) or (caller.powerStatus() == 2):
       caller.poweron()
     if (music is True):
       caller.send_azur_cmd('volup', int(Addon.getSetting('voldiff')))
