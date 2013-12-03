@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+  <!-- General -->
   <category label="30051">
     <setting id="notify" type="bool" label="30000" default="true" />
-    <setting id="timeout" type="number" label="30001" default="240" />
-  </category>
-  <category label="30052">
+    <setting id="timeout" type="number" label="30001" default="480" />
     <setting id="voldiff" type="number" label="30002" default="5" />
+    <setting id="maxvolume" type="bool" label="Max volume on startup" default="false" />
   </category>
+  <!-- Amplifier Section -->
+  <category label="30052">
+    <setting id="ampservice" type="number" label="30002" default="azur" />
+    <setting id="ampenabled" type="bool" label="30006" default="true" />
+  </category>
+  <!-- TV Section -->
   <category label="30053">
-     <setting id="musicon" type="bool" label="30003" default="false" />
+     <setting id="musicon" type="bool" label="30003" default="true" />
      <setting id="muteonvid" type="bool" label="30004" default="false" />
+     <setting id="tvenabled" type="bool" label="30006" default="true" />
      <!-- <setting id="timeoutlgtv" type="number" label="30001" default="240" /> -->
   </category>
   <category label="30054">

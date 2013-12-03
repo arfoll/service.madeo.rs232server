@@ -35,55 +35,26 @@ IDLE = 0
 DIDPLAY = False
 NOTIFYDONE = False
 
-class Caller:
-  def __init__(self):
-    #for notify mode 1
-    self.NOTIFYDONE = False
-    self.POWER = False
-    self.control = DbusControl()
-    self.control.startAzur()
-    self.control.startLgtv()
+services = {"amp": Service("azur"), "tv": Service("lgtv")}
 
-  def send_azur_cmd(self, msg, repeat):
-    self.control.getAmpIface().send_cmd(msg, repeat, False)
+def poweron(audioonly=False):
+  services["amp"].sendCmd('poweron')
+  if not audioonly:
+    services["tv"].sendCmd('poweron')
+  if audioonly and bool(Addon.getSetting('musicon')):
+    services["tv"].sendCmd('poweron')
+    # unknown callback is necesary to know tv on time
+    #services["tv"].sendCmd('enerscreenoff')
 
-  def send_lgtv_cmd(self, msg, repeat):
-    self.control.getLgtvIface().send_cmd(msg, repeat, False)
+def poweroff():
+  self.services["amp"].sendCmd('poweroff')
+  self.services["tv"].sendCmd('poweroff')
 
-  def poweron(self, audioonly=False):
-    try:
-      self.send_azur_cmd('poweron', 1)
-      self.send_lgtv_cmd('poweron', 1)
-      if audioonly:
-        # need to set enerscreenoff when tv is on
-        self.send_lgtv_cmd('enerscreenoff', 1)
-        self.POWER = 2
-      else:
-        self.POWER = True
-    except:
-      self.connectionError()
+def powerStatus():
+  return self.services["amp"].getPower() & self.services["tv"].getPower()
 
-  def poweroff(self):
-    try:
-      self.send_azur_cmd('poweroff', 1)
-      self.POWER = False
-    except:
-      self.connectionError()
-
-  def errorMessage(self, phrase):
-    dialog = xbmcgui.Dialog()
-    dialog.ok(__language__(30101), phrase)
-
-  def connectionError(self):
-    if (bool(Addon.getSetting('notify'))) and (self.NOTIFYDONE is False):
-      self.NOTIFYDONE = True
-      self.errorMessage(__language__(30100))
-
-  def powerStatus(self):
-    return self.POWER
-
-caller = Caller()
-#xbmc.executeJSONRPC("{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": 100 }, \"id\": 1}")
+if bool(Addon.getSetting('maxvolume'):
+  xbmc.executeJSONRPC("{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": 100 }, \"id\": 1}")
 
 while (not xbmc.abortRequested):
   # if xbmc is playing 
@@ -94,28 +65,27 @@ while (not xbmc.abortRequested):
   # check play type
   if (xbmc.Player().isPlayingAudio()):
     music = True
-    if (caller.powerStatus() is False):
-      caller.poweron(not bool(Addon.getSetting('musicon')))
+    if (powerStatus() is False):
+      poweron(not bool(Addon.getSetting('musicon')))
     if (video is True):
       caller.send_azur_cmd('voldown', int(Addon.getSetting('voldiff')))
       video = False
   elif (xbmc.Player().isPlayingVideo()):
     video = True
-    if (caller.powerStatus() is False) or (caller.powerStatus() == 2):
-      caller.poweron()
+    if powerStatus() is False:
+      poweron()
     if (music is True):
-      caller.send_azur_cmd('volup', int(Addon.getSetting('voldiff')))
-      caller.send_lgtv_cmd('poweron', 1)
+      self.services["amp"].sendCmd('volup', int(Addon.getSetting('voldiff')))
+      self.services["tv"].sendCmd('poweron')
       if (Addon.getSetting('muteonvid')):
-        caller.send_lgtv_cmd('mute', 1)
+        self.services["tv"].sendCmd('mute')
       music = False
   #poweroff if hasn't played/idle for defined timeout
   elif (xbmc.getGlobalIdleTime() > int(Addon.getSetting('timeout'))) and (caller.powerStatus() is True or FIRSTRUN is True):
     if (IDLE == 0) and (DIDPLAY is False):
-      caller.poweroff()
+      poweroff()
       FIRSTRUN = False
       IDLE = 1
     elif(DIDPLAY == True) and ((time.time() - lastcheck) > int(Addon.getSetting('timeout'))):
       DIDPLAY = False;
-  # small sleep
   xbmc.sleep(1000)

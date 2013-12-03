@@ -6,11 +6,15 @@
     <string id="30003">Turn on tv when playing music</string>
     <string id="30004">Mute TV on video playback (avoids sleep timer)</string>
     <string id="30005">Connection Debug Mode</string>
+    <string id="30006">Service Disabled</string>
 
     <string id="30051">General</string>
-    <string id="30052">Azur</string>
-    <string id="30053">LGTV</string>
+    <string id="30052">Amplifier</string>
+    <string id="30053">TV</string>
     <string id="30054">Debug</string>
+
+    <string id="30060">Amplifier service name</string>
+    <string id="30061">TV service name</string>
 
     <string id="30100">Could not connect to RS232Server</string>
     <string id="30101">RS232Server</string>
