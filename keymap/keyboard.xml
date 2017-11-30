@@ -67,8 +67,8 @@
       <printscreen>Screenshot</printscreen>
       <s mod="ctrl">Screenshot</s>
       <minus>VolumeDown</minus>
-      <plus>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, volup, 2)</plus>
-      <equals>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, voldown, 2)</equals>
+      <plus>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, volup, 2)</plus>
+      <equals>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, voldown, 2)</equals>
       <zero>Number0</zero>
       <one>Number1</one>
       <two>Number2</two>
@@ -110,9 +110,9 @@
       <browser_search/>
       <browser_favorites>ActivateWindow(Favourites)</browser_favorites>
       <browser_home>XBMC.ActivateWindow(Home)</browser_home>
-      <volume_mute>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, clevermute)</volume_mute>
-      <volume_down>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, voldown, 2)</volume_down>
-      <volume_up>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, volup, 2)</volume_up>
+      <volume_mute>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, clevermute)</volume_mute>
+      <volume_down>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, voldown, 2)</volume_down>
+      <volume_up>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, volup, 2)</volume_up>
       <next_track>SkipNext</next_track>
       <prev_track>SkipPrevious</prev_track>
       <stop>Stop</stop>
@@ -134,10 +134,10 @@
       <f mod="ctrl">SkipNext</f>          <!-- Skip -->
       <b mod="ctrl">SkipPrevious</b>      <!-- Replay -->
       <d mod="ctrl">Info</d>              <!-- MCE Details -->
-      <f10>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, poweroff)</f10>
-      <f12>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, poweron)</f12>
-      <f1>XBMC.RunScript(/home/brendan/xbmcclient.py, lgtv, poweroff)</f1>
-      <f2>XBMC.RunScript(/home/brendan/xbmcclient.py, lgtv, poweron)</f2>
+      <f10>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, poweroff)</f10>
+      <f12>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, poweron)</f12>
+      <f1>XBMC.RunScript(/var/lib/kodi/kodiclient.py, lgtv, poweroff)</f1>
+      <f2>XBMC.RunScript(/var/lib/kodi/kodiclient.py, lgtv, poweron)</f2>
       <f3>XBMC.Suspend</f3>
       <f9>VolumeDown</f9>
       <f8>Mute</f8>
@@ -352,8 +352,8 @@
       <o>CodecInfo</o>
       <period>NextPicture</period>
       <comma>PreviousPicture</comma>
-      <plus>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, volup, 2)</plus>
-      <minus>XBMC.RunScript(/home/brendan/xbmcclient.py, azur, voldown, 2)</minus>
+      <plus>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, volup, 2)</plus>
+      <minus>XBMC.RunScript(/var/lib/kodi/kodiclient.py, azur, voldown, 2)</minus>
       <return>Rotate</return>
       <enter>Rotate</enter>
       <r>Rotate</r>
