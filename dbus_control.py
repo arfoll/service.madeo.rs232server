@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import xbmc
 import gobject
 gobject.threads_init()
 from dbus import glib
@@ -27,6 +28,12 @@ AZURSERVICE_IFACE = str(RS232SERVER_BUS_NAME) + '.azur'
 LGTVSERVICE_OBJ_PATH = str(RS232SERVER_PATH) + 'lgtv'
 LGTVSERVICE_IFACE = str(RS232SERVER_BUS_NAME) + '.lgtv'
 
+def log(txt):
+    if isinstance (txt,str):
+        txt = txt.decode("utf-8")
+    message = u'%s: %s' % ("RS232server: ", txt)
+    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
+
 class DbusControl:
   def __init__(self):
     self.bus = dbus.SystemBus()
@@ -40,6 +47,7 @@ class DbusControl:
       self.amp_iface = dbus.Interface(self.amp_obj, AZURSERVICE_IFACE)
       self.azur_stat = True
     except:
+      log("Failed to start azur")
       pass
     return self.azur_stat
 
@@ -50,6 +58,7 @@ class DbusControl:
       self.lgtv_iface = dbus.Interface(self.lgtv_obj, LGTVSERVICE_IFACE)
       self.lgtv_stat = True
     except:
+      log("Failed to start LGTV")
       pass
     return self.lgtv_stat
 

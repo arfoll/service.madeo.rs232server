@@ -19,7 +19,7 @@ import xbmcgui
 import xbmcaddon
 import sys
 
-from dbus_control import DbusControl
+from dbus_control import DbusControl, log
 
 Addon = xbmcaddon.Addon(id='service.madeo.rs232server')
 __language__ = Addon.getLocalizedString
@@ -93,6 +93,7 @@ while (not xbmc.abortRequested):
     lastcheck = time.time()
   # check play type
   if (xbmc.Player().isPlayingAudio()):
+    log("Playing audio")
     music = True
     if (caller.powerStatus() is False):
       caller.poweron(not bool(Addon.getSetting('musicon')))
@@ -100,6 +101,7 @@ while (not xbmc.abortRequested):
       caller.send_azur_cmd('voldown', int(Addon.getSetting('voldiff')))
       video = False
   elif (xbmc.Player().isPlayingVideo()):
+    log("Playing video")
     video = True
     if (caller.powerStatus() is False) or (caller.powerStatus() == 2):
       caller.poweron()
