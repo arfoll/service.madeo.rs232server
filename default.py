@@ -48,7 +48,8 @@ class Caller:
     self.control.getAmpIface().send_cmd(msg, repeat, False)
 
   def send_lgtv_cmd(self, msg, repeat):
-    self.control.getLgtvIface().send_cmd(msg, repeat, False)
+    #self.control.getLgtvIface().send_cmd(msg, repeat, False)
+    pass
 
   def poweron(self, audioonly=False):
     try:
