@@ -13,8 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import time
 import sys
+import time
 import xbmc
 import xbmcgui
 import xbmcaddon
@@ -83,12 +83,13 @@ class Caller:
   def powerStatus(self):
     return self.POWER
 
+
 caller = Caller()
 #xbmc.executeJSONRPC("{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": 100 }, \"id\": 1}")
-
 player = xbmc.Player()
+monitor = xbmc.Monitor()
 
-while (1):
+while not monitor.abortRequested():
   # if xbmc is playing 
   if (player.isPlaying() == 1):
     IDLE = 0

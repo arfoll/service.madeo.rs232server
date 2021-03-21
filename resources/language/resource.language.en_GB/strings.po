@@ -1,0 +1,53 @@
+# Kodi Media Center language file
+# Addon Name: RS232 service
+# Addon id: service.madeo.rs232server
+# Addon Provider: arfoll
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2021-03-21 11:01+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgctxt "#30000"
+msgid "Show connection errors"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Timeout in seconds before poweroff"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Volume diff when audio->video and video->audio"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Turn on tv when playing music"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Mute TV on video playback (avoids sleep timer)"
+msgstr ""
+
+msgctxt "#30051"
+msgid "General"
+msgstr ""
+
+msgctxt "#30052"
+msgid "TV settings"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Could not connect to RS232Server"
+msgstr ""
+
+msgctxt "#30101"
+msgid "RS232Server"
+msgstr ""

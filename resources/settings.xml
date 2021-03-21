@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <category label="30051">
-    <setting id="notify" type="bool" label="30000" default="true" />
-    <setting id="timeout" type="number" label="30001" default="240" />
-  </category>
-  <category label="30052">
-    <setting id="voldiff" type="number" label="30002" default="5" />
-  </category>
-  <category label="30053">
-     <setting id="musicon" type="bool" label="30003" default="false" />
-     <setting id="muteonvid" type="bool" label="30004" default="false" />
-     <!-- <setting id="timeoutlgtv" type="number" label="30001" default="240" /> -->
-  </category>
-  <category label="30054">
-    <setting id="debug" type="bool" label="30005" default="false" />
-  </category>
+  <section id="service.madeo.rs232server">
+    <category id="general" label="30051">
+      <setting id="notify" type="bool" label="30000" default="true" />
+      <setting id="timeout" type="number" label="30001" default="240" />
+      <setting id="voldiff" type="number" label="30002" default="5" />
+    </category>
+    <category id="display" label="30052">
+      <setting id="musicon" type="bool" label="30003" default="false" />
+      <setting id="muteonvid" type="bool" label="30004" default="false" />
+      <!-- <setting id="timeoutlgtv" type="number" label="30001" default="240" /> -->
+    </category>
+  </section>
 </settings>
