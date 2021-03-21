@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import os
 import sys
@@ -6,9 +6,9 @@ import subprocess
 import errno
 
 if len(sys.argv) < 3:
-    print "error: Not enough arguments"
-    print "       xbmcclient.py <RS232_SERVICE> <ACTION>"
-    print "   ex: xbmcclient.py azur mute"
+    print ("error: Not enough arguments")
+    print ("       xbmcclient.py <RS232_SERVICE> <ACTION>")
+    print ("   ex: xbmcclient.py azur mute")
     sys.exit(errno.EINVAL)
 
 CLEVERMUTE_LOCK="/tmp/clevermute"
@@ -32,7 +32,7 @@ if ACTION1 == "clevermute":
         sys.argv[2]="mute"
 
 args = [MINICLIENT_BINARY] + [RS232_SERVICE] + sys.argv[2:len(sys.argv)]
-print args
+#print(args)
 
 subprocess.call(args)
 sys.exit(0)

@@ -1,8 +1,8 @@
 # KODI/XBMC service addon that allows rs232server to control from within XBMC/KODI in a semi automated matter
 
-rs232server is a service addon and requires XBMC 11.x 'Eden'. Note this is only
-tested on x86-64 KODI 15.x on Linux.  rs232server must be running before XBMC
-starts with addon.
+rs232server is a service addon and requires XBMC 19.x 'Matrix'. Note this is
+only tested on x86-64 KODI 19.x on Linux. rs232server must be running before
+XBMC starts with addon.
 
 INSTALL
 -------

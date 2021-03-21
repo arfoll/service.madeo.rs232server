@@ -1,4 +1,4 @@
-# Copyright (C) 2011, 2012, 2013 Brendan Le Foll <brendan@fridu.net>
+# Copyright (C) 2011-2021 Brendan Le Foll <brendan@fridu.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,12 +14,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
+import sys
 import xbmc
 import xbmcgui
 import xbmcaddon
-import sys
 
-from dbus_control import DbusControl, log
+from dbus_control import DbusControl
 
 Addon = xbmcaddon.Addon(id='service.madeo.rs232server')
 __language__ = Addon.getLocalizedString
@@ -86,23 +86,23 @@ class Caller:
 caller = Caller()
 #xbmc.executeJSONRPC("{\"jsonrpc\": \"2.0\", \"method\": \"Application.SetVolume\", \"params\": { \"volume\": 100 }, \"id\": 1}")
 
-while (not xbmc.abortRequested):
+player = xbmc.Player()
+
+while (1):
   # if xbmc is playing 
-  if (xbmc.Player().isPlaying() == 1):
+  if (player.isPlaying() == 1):
     IDLE = 0
     DIDPLAY = True
     lastcheck = time.time()
   # check play type
-  if (xbmc.Player().isPlayingAudio()):
-    log("Playing audio")
+  if (player.isPlayingAudio()):
     music = True
     if (caller.powerStatus() is False):
       caller.poweron(not bool(Addon.getSetting('musicon')))
     if (video is True):
       caller.send_azur_cmd('voldown', int(Addon.getSetting('voldiff')))
       video = False
-  elif (xbmc.Player().isPlayingVideo()):
-    log("Playing video")
+  elif (player.isPlayingVideo()):
     video = True
     if (caller.powerStatus() is False) or (caller.powerStatus() == 2):
       caller.poweron()

@@ -1,4 +1,4 @@
-# Copyright (C) 2012,2013 Brendan Le Foll <brendan@fridu.net>
+# Copyright (C) 2012-2021 Brendan Le Foll <brendan@fridu.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,11 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import xbmc
-import gobject
-gobject.threads_init()
-from dbus import glib
-glib.init_threads()
 import dbus
 
 #Dbus paths
@@ -28,12 +23,6 @@ AZURSERVICE_IFACE = str(RS232SERVER_BUS_NAME) + '.azur'
 LGTVSERVICE_OBJ_PATH = str(RS232SERVER_PATH) + 'lgtv'
 LGTVSERVICE_IFACE = str(RS232SERVER_BUS_NAME) + '.lgtv'
 
-def log(txt):
-    if isinstance (txt,str):
-        txt = txt.decode("utf-8")
-    message = u'%s: %s' % ("RS232server: ", txt)
-    xbmc.log(msg=message.encode("utf-8"), level=xbmc.LOGDEBUG)
-
 class DbusControl:
   def __init__(self):
     self.bus = dbus.SystemBus()
@@ -41,25 +30,17 @@ class DbusControl:
     self.lgtv_stat = False
 
   def startAzur(self):
-    try:
-      # Amp connection
-      self.amp_obj = self.bus.get_object(RS232SERVER_BUS_NAME, AZURSERVICE_OBJ_PATH)
-      self.amp_iface = dbus.Interface(self.amp_obj, AZURSERVICE_IFACE)
-      self.azur_stat = True
-    except:
-      log("Failed to start azur")
-      pass
+    # Amp connection
+    self.amp_obj = self.bus.get_object(RS232SERVER_BUS_NAME, AZURSERVICE_OBJ_PATH)
+    self.amp_iface = dbus.Interface(self.amp_obj, AZURSERVICE_IFACE)
+    self.azur_stat = True
     return self.azur_stat
 
   def startLgtv(self):
-    try:
-      # Lgtv connection
-      self.lgtv_obj = self.bus.get_object(RS232SERVER_BUS_NAME, LGTVSERVICE_OBJ_PATH)
-      self.lgtv_iface = dbus.Interface(self.lgtv_obj, LGTVSERVICE_IFACE)
-      self.lgtv_stat = True
-    except:
-      log("Failed to start LGTV")
-      pass
+    # Lgtv connection
+    self.lgtv_obj = self.bus.get_object(RS232SERVER_BUS_NAME, LGTVSERVICE_OBJ_PATH)
+    self.lgtv_iface = dbus.Interface(self.lgtv_obj, LGTVSERVICE_IFACE)
+    self.lgtv_stat = True
     return self.lgtv_stat
 
   def getAmpIface(self):
