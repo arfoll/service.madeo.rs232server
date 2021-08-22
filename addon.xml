@@ -7,9 +7,9 @@
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <extension point="xbmc.service"
-             library="service.py" start="login|startup" \>
-  <extension point="xbmc.script"
-             library="kodiclient.py" \>
+	  library="service.py" start="login|startup" />
+  <extension point="xbmc.python.script"
+	  library="kodiclient.py" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
     <summary lang="en_GB">Provides integration with rs232server for amplifier/tv control over RS232.</summary>
